@@ -181,7 +181,7 @@
                       <p class="card-text">Precio: {{pastas.Precio}} USD</p>
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'cart_add' nombre_producto=pastas.name p_precio=pastas.Precio %}">Añadir al carrito</a></button>
+                          <button type="button" class="btn btn-primary"><a href="{% url 'cart_add' nombre_producto=pastas.name p_precio=pastas.Precio %}" class="text-white">Añadir al carrito</a></button>
                         </div>
                       </div>
                     </div>
