@@ -1,0 +1,50 @@
+{% extends 'base/layout.html' %}
+
+{% block main %}
+<div class="container">
+   <h3 class="text-title text-center text-uppercase">Ordenes</h3>
+   <table class="table table-image">
+      <thead class="thead-dark">
+         <tr>
+            <th scope="col" class="text-center">Producto</th>
+            <th scope="col" class="text-center">Topping</th>
+            <th scope="col" class="text-center">Extra</th>
+            <th scope="col" class="text-center">Cantidad</th>
+            <th scope="col" class="text-center">Precio</th>  
+         </tr>
+      </thead>
+      {% for orden in ordenes %}
+      {% if orden.estado == False%}
+         <tbody>
+            <tr>
+               <td class="text-center">
+                  {{orden.nombre}}
+                  
+               </td>
+               <td class="text-center">
+                  {{orden.t_lista}}
+               </td>
+               <td class="text-center">
+                  {{orden.l_extra}}
+               </td>
+               <td class="text-center">
+                  {{orden.cantidad}}
+               </td>
+                <td class="text-center">
+                  {{orden.precio}}
+               </td>
+               <td class="text-center"><button class="btn btn-primary"><a href="{% url 'confirmar' id_cart=orden.pk %}" class="text-white">Confirmar</a></button></td>
+               <td class="text-center"><button class="btn btn-danger"><a href="{% url 'borrar' id_cart=orden.pk %}" class="text-white">Borrar</a></button></td>
+            </tr>
+         </tbody>
+      
+      {% endif %}
+      {% empty %}
+         <div class="text-center text-uppercase text-danger">
+            <h2>Carrito de compra vacio!</h2>
+         </div> 
+      {% endfor %}
+   </table>
+</div>
+
+{% endblock %}

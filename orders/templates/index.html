@@ -1,0 +1,393 @@
+{% extends 'base/layout.html' %}
+{% load static %}
+{% block title %} Web50-Pizza: Menu {% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
+{% endblock %}
+{% block main %}
+<!-- ---------------------------Pizza Regular------------------------------ -->
+<div class="container">
+    <div class="card bg-dark mt-5">
+        <h3 class="card-title Menu-title text-light text-center mt-2 pizzaN" >🍕 Pizza Regular 🍕</h3>
+        <div class="card-body">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for Regulars in Regular %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img class="card-img-top" src="{{Regulars.img_producto}}" alt="Imagen Pizza">
+                            <div class="card-body">
+                                <div class="card-title text-center titleN" id="nombre">{{ Regulars.name }}
+                                </div>
+                                <hr>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{Regulars.id}}" value="{{Regulars.id}}">
+                                    Agregar
+                                </button>
+                                <div class="modal fade" id="staticBackdrop{{Regulars.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Detalle de la Pizza</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="{% url 'cart_add_pizza' %}" method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="name" value="{{Regulars.name}}">
+                                                <div class="modal-body"> 
+                                                    <p class="card-text">Pizza Pequeño: {{Regulars.P_Small}} USD</p>
+                                                    <p class="card-text">Pizza Grande: {{Regulars.P_Large}} USD</p> 
+                                                    {% if Regulars.Topping_Estado == True %}
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="radio" name="precio" value="{{Regulars.P_Small}}">
+                                                        <label class="form-check-label" for="flexRadioDefault1">
+                                                            Pizza Pequeña - {{Regulars.P_Small}}
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="radio" name="precio" value="{{Regulars.P_Large}}">
+                                                        <label class="form-check-label" for="flexRadioDefault2">
+                                                            Pizza Grande - {{Regulars.P_Large}}
+                                                        </label>
+                                                    </div>
+                                                    <hr>
+                                                        <h4>Selecciona Aderezos</h4>
+                                                        {% for Toppings in Topping %}
+                                                            <div class="form-check">
+                                                                <input class="form-check-input check" type="checkbox" name="toppings" id="flexRadioDefault{{Toppings.id}}" value="{{Toppings.Topping}}">
+                                                                <label class="form-check-label" for="flexcheckboxDefault{{Toppings.id}}">
+                                                                    {{Toppings.Topping}}
+                                                                </label>
+                                                            </div>
+                                                        {% endfor %}
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Añadir Pizza al carrito</button>
+                                                        </div>          
+                                                        
+                                            </form>
+                                                    {%else%}
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary"><a href='{% url "cart_add" nombre_producto=Regulars.name p_precio=Regulars.P_Small %}' class="text-light"> Añadir Pizza Pequeña</a></button>
+                                                            <button type="button" class="btn btn-primary"><a href='{% url "cart_add" nombre_producto=Regulars.name p_precio=Regulars.P_Large %}' class="text-light"> Añadir Pizza Grande</a> </button>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>  
+        </div>
+    </div>
+</div>
+
+<!-- ---------------------------Pizza Sicilian------------------------------ -->
+<div class="container">
+    <div class="card bg-dark mt-5">
+        <h3 class="card-title Menu-title text-light text-center mt-2 pizzaN" >🍕 Pizza Sicilian 🍕</h3>
+        <div class="card-body">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for Sicilians in Sicilian %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img class="card-img-top" src="{{Sicilians.img_producto}}" alt="Imagen Pizza">
+                            <div class="card-body">
+                                <div class="card-title text-center titleN" id="nombre">{{ Sicilians.name }}
+                                </div>
+                                <hr>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{Sicilians.id}}" value="{{Sicilians.id}}">
+                                    Agregar
+                                </button>
+                                <div class="modal fade" id="staticBackdrop{{Sicilians.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Detalle de la Pizza</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="{% url 'cart_add_pizza' %}" method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="name" value="{{Sicilians.name}}">
+                                                <div class="modal-body"> 
+                                                    <p class="card-text">Pizza Pequeño: {{Sicilians.P_Small}} USD</p>
+                                                    <p class="card-text">Pizza Grande: {{Sicilians.P_Large}} USD</p> 
+                                                    {% if Sicilians.Topping_Estado == True %}
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="radio" name="precio" value="{{Sicilians.P_Small}}">
+                                                        <label class="form-check-label" for="flexRadioDefault1">
+                                                            Pizza Pequeña - {{Sicilians.P_Small}}
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="radio" name="precio" value="{{Sicilians.P_Large}}">
+                                                        <label class="form-check-label" for="flexRadioDefault2">
+                                                            Pizza Grande - {{Sicilians.P_Large}}
+                                                        </label>
+                                                    </div>
+                                                    <hr>
+                                                        <h4>Selecciona Aderezos</h4>
+                                                        {% for Toppings in Topping %}
+                                                            <div class="form-check">
+                                                                <input class="form-check-input check" type="checkbox" name="toppings" id="flexRadioDefault{{Toppings.id}}" value="{{Toppings.Topping}}">
+                                                                <label class="form-check-label" for="flexcheckboxDefault{{Toppings.id}}">
+                                                                    {{Toppings.Topping}}
+                                                                </label>
+                                                            </div>
+                                                        {% endfor %}
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Añadir Pizza al carrito</button>
+                                                        </div>          
+                                                        
+                                                    </form>
+                                                    {%else%}
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary"><a href='{% url "cart_add" nombre_producto=Sicilians.name p_precio=Sicilians.P_Small %}' class="text-light"> Añadir Pizza Pequeña</a></button>
+                                                            <button type="button" class="btn btn-primary"><a href='{% url "cart_add" nombre_producto=Sicilians.name p_precio=Sicilians.P_Large %}' class="text-light"> Añadir Pizza Grande</a> </button>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>  
+        </div>
+    </div>
+</div>
+
+<!-- ---------------------------Pasta------------------------------ -->
+<div class="container">
+        <div class="card bg-dark mt-5">
+            <h3 class="card-title Menu-title text-light text-center mt-2 pizzaN">🍝 Pasta 🍝</h3>
+            <div class="card-body">
+              <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for pastas in pasta %}
+                <div class="col">
+                  <div class="card shadow-sm">
+                    <img class="card-img-top" src="{{pastas.img_producto}}" alt="Imagen pasta">
+                    <div class="card-body">
+                    <div class="card-title text-center titleN">{{ pastas.name }}</div>
+                    <hr>
+                      <p class="card-text">Precio: {{pastas.Precio}} USD</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'cart_add' nombre_producto=pastas.name p_precio=pastas.Precio %}">Añadir al carrito</a></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+            </div>
+          </div>
+          </div>
+</div>
+
+<!-- ---------------------------Sub------------------------------ -->
+<div class="container">
+    <div class="card bg-dark mt-5">
+        <h3 class="card-title Menu-title text-light text-center mt-2 pizzaN" >🍕 Subs 🍕</h3>
+        <div class="card-body">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for Sub in Subs %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img class="card-img-top" src="{{Sub.img_producto}}" alt="Imagen Pizza">
+                            <div class="card-body">
+                                <div class="card-title text-center titleN" id="nombre">{{ Sub.name }}
+                                </div>
+                                <hr>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{Sub.id}}" value="{{Sub.id}}">
+                                    Agregar
+                                </button>
+                                <div class="modal fade" id="staticBackdrop{{Sub.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Detalle del Subs</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action='{% url "cart_add_pizza" %}' method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="name" value="{{Sub.name}}">
+                                                <div class="modal-body"> 
+                                                    <p class="card-text">Subs Pequeño: {{Sub.P_Small}} USD</p>
+                                                    <p class="card-text">Subs Grande: {{Sub.P_Large}} USD</p> 
+                                                    {% if Sub.Extra_Estado == True %}
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="radio" name="precio" value="{{Sub.P_Small}}">
+                                                        <label class="form-check-label" for="flexRadioDefault1">
+                                                            Subs Pequeña - {{Sub.P_Small}}
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="radio" name="precio" value="{{Sub.P_Large}}">
+                                                        <label class="form-check-label" for="flexRadioDefault2">
+                                                            Subs Grande - {{Sub.P_Large}}
+                                                        </label>
+                                                    </div>
+                                                    <hr>
+                                                        <h4>Selecciona Extra</h4>
+                                                        {% for Extras in Extra %}
+                                                            <div class="form-check">
+                                                                <input type="hidden" name="n_extra" value="{{Extras.Extra}}">
+                                                                <input class="form-check-input sub_extra" type="checkbox" name="extras" id="flexRadioDefault{{Extra.id}}" value="{{Extras.Precio}}">
+                                                                <label class="form-check-label" for="flexcheckboxDefault{{Extras.id}}">
+                                                                    {{Extras.Extra}} - {{Extras.Precio}}
+                                                                </label>
+                                                            </div>
+                                                        {% endfor %}
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Añadir Subs al carrito</button>
+                                                        </div>          
+                                                        
+                                            </form>
+                                                    {%else%}
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary"><a href='{% url "cart_add" nombre_producto=Sub.name p_precio=Sub.P_Small %}' class="text-light"> Añadir Subs Pequeña</a></button>
+                                                            <button type="button" class="btn btn-primary"><a href='{% url "cart_add" nombre_producto=Sub.name p_precio=Sub.P_Large %}' class="text-light"> Añadir Subs Grande</a> </button>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>  
+        </div>
+    </div>
+
+
+<!-- ---------------------------Ensalada------------------------------ -->
+<div class="container">
+    <div class="card bg-dark mt-5">
+        <h3 class="card-title Menu-title text-light text-center mt-2 pizzaN" >🥗 Ensalada 🥗</h3>
+        <div class="card-body">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for Ensaladas in Ensalada %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img class="card-img-top" src="{{Ensaladas.img_producto}}" alt="Imagen Pizza">
+                            <div class="card-body">
+                                <div class="card-title text-center titleN">
+                                    {{ Ensaladas.name }}
+                                </div>
+                                    <hr >
+                                    <p class="card-text">Precio: {{Ensaladas.Precio}} USD</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary"><a href='{% url "cart_add" nombre_producto=Ensaladas.name p_precio=Ensaladas.Precio %}'class="text-white">Añadir al carrito</a></button>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ---------------------------Bandeja de cena------------------------------ -->
+<div class="container">
+      <div class="card bg-dark mt-5">
+        <h3 class="card-title Menu-title text-light text-center mt-2 pizzaN" >Bandejas de cena</h3>
+        <div class="card-body">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for Dinners in Dinner %}
+            <div class="col">
+              <div class="card shadow-sm">
+                <img class="card-img-top" src="{{Dinners.img_producto}}" alt="Imagen Pizza">
+                <div class="card-body">
+                <div class="card-title text-center titleN">{{ Dinners.name }}</div>
+                <hr >
+                  <p class="card-text">Pequeño: {{Dinners.P_Small}} USD</p>
+                  <p class="card-text">Grande: {{Dinners.P_Large}} USD</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-primary"><a href="{% url 'cart_add' nombre_producto=Dinners.name p_precio=Dinners.P_Small %}"class="text-white">Añadir Dinner pequeño</a></button>
+                      <button type="button" class="btn btn-primary"><a href="{% url 'cart_add' nombre_producto=Dinners.name p_precio=Dinners.P_Large %}"class="text-white">Añadir Dinner Grande</a></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+      </div>
+      </div>
+      </div>
+</div>
+
+<!-- ---------------------------Fritanga------------------------------ -->
+<div class="container">
+    <div class="card bg-dark mt-5">
+        <h3 class="card-title Menu-title text-light text-center mt-2 pizzaN" >Fritanga</h3>
+        <div class="card-body">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for Fritangas in Fritanga %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img class="card-img-top" src="{{Fritangas.img_producto}}" alt="Imagen Pizza">
+                            <div class="card-body">
+                                <div class="card-title text-center titleN">
+                                    {{ Fritangas.name }}
+                                </div>
+                                    <hr >
+                                    <p class="card-text">Precio: {{Fritangas.Precio}} USD</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary"><a href='{% url "cart_add" nombre_producto=Fritangas.name p_precio=Fritangas.Precio %}'class="text-white">Añadir al carrito</a></button>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    var checks = document.querySelectorAll(".check");
+    var max = 3;
+
+    console.log(max)
+    for (var i = 0; i < checks.length; i++)
+        checks[i].onclick = selectiveCheck;
+        function selectiveCheck (event) {
+        var checkedChecks = document.querySelectorAll(".check:checked");
+    if (checkedChecks.length >= max + 1)
+      return false;
+  }
+</script>
+<script>
+      var checks2 = document.querySelectorAll(".sub_extra");
+    var max2 = 1;
+
+    console.log(max2)
+    for (var i = 0; i < checks2.length; i++)
+        checks2[i].onclick = selectiveCheck;
+        function selectiveCheck (event) {
+        var checkedChecks2 = document.querySelectorAll(".sub_extra:checked");
+    if (checkedChecks2.length >= max2 + 1)
+      return false;
+  }
+</script>
+{% endblock %}

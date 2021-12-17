@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap');
+*{
+    padding: 0%;
+    margin: 0%;
+}
+.pizzaN{
+    font-family: 'Mochiy Pop P One', sans-serif;
+}
+
+.card-body{
+    background: rgb(0 0 0 / 13%) !important;
+}
+.Menu-title{
+    background: rgb(0 249 56 / 62%) !important;
+}
+.card{
+    border: 2px solid rgb(253 253 253 / 35%) !important;
+    border-radius: 0.7rem !important;
+}
+.imgcarrito{
+    width: 15%;
+
+}
+.titleN{
+    font-family: "Hotpizza";
+    font-size: 1.5rem;
+}
+@font-face{
+    font-family: "Hotpizza";
+    src: url("/orders/static/Fonts/hotpizza.ttf") format('truetype');
+  }

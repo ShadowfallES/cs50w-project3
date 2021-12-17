@@ -1,0 +1,57 @@
+{% extends 'base/layout.html' %}
+
+{% block main %}
+<div class="container">
+   <h3 class="text-title text-center text-uppercase">Historial de Ordenes</h3>
+   <table class="table table-image">
+      <thead class="thead-dark">
+         <tr>
+            <th scope="col" class="text-center">Producto</th>
+            <th scope="col" class="text-center">Topping</th>
+            <th scope="col" class="text-center">Extra</th>
+            <th scope="col" class="text-center">Cantidad</th>
+            <th scope="col" class="text-success">Precio</th> 
+            <th scope="col" class="text-center">Envio</th>
+         </tr>
+      </thead>
+      {% for orden in ordenes %}
+      {% if orden.estado == True %}
+      <tbody>
+            <tr>
+               <td class="text-center">
+                  {{orden.nombre}}
+                     
+               </td>
+               <td class="text-center">
+                  {{orden.t_lista}}
+               </td>
+               <td class="text-center">
+                  {{orden.l_extra}}
+               </td>
+               <td class="text-center">
+                  {{orden.cantidad}}
+               </td>
+               <td>
+                  {{orden.precio}}
+               </td>
+            {% if  orden.Envio == False%}
+            <td class="text-center text-danger">
+               Pendiente
+            </td>
+            {% else %}
+            <td class="text-center text-success">
+               Enviado
+            </td>
+            {% endif %}
+            </tr>
+      </tbody>
+      {% endif %}
+      {% empty %}
+      <div class="text-center text-uppercase text-danger">
+        <h2>Historial de compra vacio!</h2>
+     </div> 
+      {% endfor %}
+   </table>
+</div>
+
+{% endblock %}
