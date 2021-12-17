@@ -140,7 +140,7 @@ def historial(request):
 @staff_member_required
 def Admin(request):
     compras = CartItems.objects.all()
-    return render(request, 'Admin.html', {"ordenes":compras})
+    return render(request, 'admin.html', {"ordenes":compras})
 
 @staff_member_required
 def conf_envi(request, confirmar_id):
