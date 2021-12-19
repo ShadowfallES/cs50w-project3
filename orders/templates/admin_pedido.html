@@ -6,6 +6,7 @@
    <table class="table table-image">
       <thead class="thead-dark">
          <tr>
+            <th scope="col" class="text-center">Username</th>
             <th scope="col" class="text-center">Producto</th>
             <th scope="col" class="text-center">Topping</th>
             <th scope="col" class="text-center">Extra</th>
@@ -19,6 +20,10 @@
       {% if orden.estado == True%}
       <tbody>
             <tr>
+               <td class="text-center">
+                  {{orden.username}}
+                     
+               </td>
                <td class="text-center">
                   {{orden.nombre}}
                      

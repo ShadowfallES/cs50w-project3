@@ -41,6 +41,7 @@
               <li><a class="dropdown-item" href="{% url 'historial' %}">Historial</a></li>
               {% if user.is_superuser %}
               <li><a class="dropdown-item" href="{% url 'Admin' %}">Administrar Pedido</a></li>
+              <li><a class="dropdown-item" href="{% url 'Administracion' %}">Administrar Menu</a></li>
               {% endif %}
               <li>
               <form action="{% url 'logout' %}" method="post">

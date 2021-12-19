@@ -1,0 +1,131 @@
+{% extends 'base/layout.html' %}
+
+{% block main %}
+<div class="container">
+    <div class="text-center text-uppercase">
+        <h2>Administrador</h2>
+    </div>
+   <h3 class="text-title text-center text-uppercase">Catalogo de menu</h3>
+   <table class="table table-image table-table-responsive">
+       <h4 class="text-center">Menu</h4>
+      <thead class="thead-dark">
+         <tr>
+            <th scope="col" class="text-center">Platillos</th>
+            <th scope="col" class="text-center">Precio</th>
+            <th scope="col" class="text-center">Precio Pequeño</th>
+            <th scope="col" class="text-center">Precio Grande</th>
+            <th scope="col" class="text-center">Estado de toppings</th>
+            <th scope="col" class="text-center">Estado de Extra</th>
+            <th scope="col" class="text-center">Accion</th>
+         </tr>
+      </thead>
+      {% for menus in menu %}
+      <tbody>
+            <tr>
+               <td class="text-center">
+                  {{menus.name}} 
+               </td>
+               <td>
+                  {{menus.Precio}}
+               </td>
+               <td>
+                {{menus.P_Small}}
+             </td>
+             <td>
+                {{menus.P_Large}}
+             </td>
+             <td class="text-center">
+                <div class="form-check">
+                    {% if menus.Topping_Estado == True %}
+                    <input class="form-check-input" type="checkbox" value="{{menus.Topping_Estado}}" disabled {% if menus.Topping_Estado == True %} checked {% endif %} id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                         Acepta Toppings
+                    </label>
+                    {% else %}
+                    <input class="form-check-input" type="checkbox" disabled id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        No acepta topping
+                    </label>   
+                    {% endif %}  
+                    </label>
+                  </div>
+            </td>
+            <td class="text-center">
+                <div class="form-check">
+                    {% if menus.Extra_Estado == True %}
+                    <input class="form-check-input" type="checkbox" value="{{menus.Extra_Estado}}" disabled {% if menus.Extra_Estado == True %} checked {% endif %} id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                         Acepta Extra
+                    </label>
+                    {% else %}
+                    <input class="form-check-input" type="checkbox" disabled id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        No acepta Extra
+                    </label>   
+                    {% endif %}  
+                    </label>
+                  </div>
+            </td>
+                <td class="text-center">
+                    <button class="btn btn-danger"><a href="{% url 'borrar_menu' confirmar_id=menus.pk %}" class="text-decoration-none text-light">Borrar</a></button>
+                </td>
+            </tr>
+      </tbody>
+      
+      {% endfor %}
+   </table>
+</div>
+<br>
+<div class="container">
+    <h3 class="text-title text-center text-uppercase">Toppings</h3>
+    <table class="table table-image table-table-responsive">
+        <thead class="thead-dark">
+           <tr>
+              <th scope="col" class="text-center">Topping</th>
+              <th scope="col" class="text-center">Accion</th>
+           </tr>
+        </thead>
+        {% for toppings in topping %}
+        <tbody>
+              <tr>
+                 <td class="text-center">
+                    {{toppings.Topping}} 
+                 </td>
+                 <td class="text-center">
+                    <button class="btn btn-danger"><a href="{% url 'borrar_Topping' confirmar_id=toppings.pk %}" class="text-decoration-none text-light">Borrar</a></button>
+                </td>
+              </tr>
+              
+        </tbody>
+        {% endfor %}
+     </table>
+</div>
+<br>
+<div class="container">
+    <h3 class="text-title text-center text-uppercase">EXTRA</h3>
+    <table class="table table-image table-table-responsive">
+        <thead class="thead-dark">
+           <tr>
+              <th scope="col" class="text-center">Extra</th>
+              <th scope="col" class="text-center">Precio</th>
+              <th scope="col" class="text-center">Accion</th>
+           </tr>
+        </thead>
+        {% for extras in extra %}
+        <tbody>
+              <tr>
+                 <td class="text-center">
+                    {{extras.Extra}} 
+                 </td>
+                 <td class="text-center">
+                    {{extras.Precio}} 
+                 </td>
+                 <td class="text-center">
+                     <button class="btn btn-danger"><a href="{% url 'borrar_extra' confirmar_id=extras.pk %}" class="text-decoration-none text-light">Borrar</a></button>
+                 </td>
+              </tr>
+        </tbody>
+        {% endfor %}
+     </table>
+</div>
+{% endblock %}

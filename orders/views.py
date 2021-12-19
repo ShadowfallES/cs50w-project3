@@ -74,7 +74,6 @@ def cart_add(request,nombre_producto, p_precio):
     #cart = Cart(request)
     return redirect("index")
 
-
 def confirmar(request, id_cart):
     ordenes = CartItems.objects.get(pk=id_cart)
     ordenes.estado = "True"
@@ -82,9 +81,11 @@ def confirmar(request, id_cart):
     return redirect('ordenes')
 
 def borrar(request, id_cart):
+
     ordenes = CartItems.objects.get(pk=id_cart)
     ordenes.delete()
     return redirect('ordenes')
+
 @login_required(login_url="/login")
 def cart_add_pizza(request):
     if request.method == 'POST':
@@ -140,7 +141,7 @@ def historial(request):
 @staff_member_required
 def Admin(request):
     compras = CartItems.objects.all()
-    return render(request, 'admin.html', {"ordenes":compras})
+    return render(request, 'admin_pedido.html', {"ordenes":compras})
 
 @staff_member_required
 def conf_envi(request, confirmar_id):
@@ -154,3 +155,27 @@ def borrar_pedido(request, confirmar_id):
     ordenes = CartItems.objects.get(pk=confirmar_id)
     ordenes.delete()
     return redirect('Admin')
+
+@staff_member_required
+def Administracion(request):
+    menu = Product.objects.all()
+    topping = Topping.objects.all()
+    extra = Extra.objects.all()
+    return render(request, "Administracion.html", {"menu":menu, "topping":topping, "extra":extra})
+
+# Borrar
+
+def borrar_menu(request, confirmar_id):
+    producto = Product.objects.get(pk=confirmar_id)
+    producto.delete()
+    return redirect('Administracion')
+
+def borrar_Topping(request, confirmar_id):
+    Toppings = Topping.objects.get(pk=confirmar_id)
+    Toppings.delete()
+    return redirect('Administracion')
+
+def borrar_extra(request, confirmar_id):
+    extra = Extra.objects.get(pk=confirmar_id)
+    extra.delete()
+    return redirect('Administracion')
