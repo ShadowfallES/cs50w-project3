@@ -8,7 +8,7 @@
 <!-- ---------------------------Pizza Regular------------------------------ -->
 <div class="container">
     <div class="card bg-dark mt-5">
-        <h3 class="card-title Menu-title text-light text-center mt-2 pizzaN" >🍕 Pizza Regular 🍕</h3>
+        <h3 class="card-title Menu-title text-light text-center mt-2 pizzaN h-100" >🍕 Pizza Regular 🍕</h3>
         <div class="card-body">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for Regulars in Regular %}
@@ -93,7 +93,7 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for Sicilians in Sicilian %}
                     <div class="col">
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm h-100">
                             <img class="card-img-top" src="{{Sicilians.img_producto}}" alt="Imagen Pizza">
                             <div class="card-body">
                                 <div class="card-title text-center titleN" id="nombre">{{ Sicilians.name }}

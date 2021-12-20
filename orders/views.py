@@ -4,11 +4,12 @@ from django.http import HttpResponseRedirect, HttpResponse, request
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import *
 from django.urls import reverse
-from django.contrib.auth import logout as core_logout, login as auth_login
+from django.contrib.auth import authenticate, logout as core_logout, login as auth_login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
+from .form import RegistroForm
 #from django.contrib.messages import constants as messages
 
 # Create your views here.
@@ -27,29 +28,34 @@ def index(request):
 
 # registro del usuario
 def register(response):
-    form = UserCreationForm()
     if response.method == 'POST':
-        form = UserCreationForm(response.POST)
+        form = RegistroForm(response.POST)
         print(form)
         if form.is_valid():
             form.save()
-            #user = form.cleaned_data.get('username')
-            #messages.success(response, 'Cuenta creada' + user)
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            messages.success(response, ("Registro completado"))
             return redirect('index')
+    else:
+        form = RegistroForm()
     return  render(response, 'register.html', {'form':form})
 
 # Login de usuario
 def login(request):
     if request.method == 'POST':
-        
         form = AuthenticationForm(data=request.POST)
         print(form)
         if form.is_valid():
             user = form.get_user()
             auth_login(request, user)
+            name = request.user
+            messages.success(request, ("Bienvenido " + str(name)))
             return redirect('index')
 
     else:
+        
         form = AuthenticationForm()
     return render(request, 'login.html', {'form':form})
 
@@ -58,6 +64,7 @@ def logout(request):
 
     if request.method == 'POST':
         core_logout(request)
+        messages.success(request, ("Adios, Vuelva pronto"))
         return redirect('index')
 
 @login_required(login_url="/login")
@@ -71,15 +78,17 @@ def cart_add(request,nombre_producto, p_precio):
     )
     ordenes.save()
     print(ordenes, user)
-    #cart = Cart(request)
+    messages.success(request, ("Hemos agregado al carrito el plato " + str(nombre_producto)))
     return redirect("index")
 
+@login_required(login_url="/login")
 def confirmar(request, id_cart):
     ordenes = CartItems.objects.get(pk=id_cart)
     ordenes.estado = "True"
     ordenes.save()
     return redirect('ordenes')
 
+@login_required(login_url="/login")
 def borrar(request, id_cart):
 
     ordenes = CartItems.objects.get(pk=id_cart)
@@ -124,14 +133,16 @@ def cart_add_pizza(request):
                 l_extra = L_extra
             )
             ordenes_instance.save()
-
+    messages.success(request, ("Hemos agregado al carrito el plato " + str(nombre)))
     return redirect('index')
 
+@login_required(login_url="/login")
 def ordenes(request):
     user=request.user
     ordenes = CartItems.objects.all().filter(username=user)
     return render(request, 'cart/cart_detail.html',{"ordenes":ordenes})
 
+@login_required(login_url="/login")
 def historial(request):
 
     user=request.user
@@ -147,10 +158,11 @@ def Admin(request):
 def conf_envi(request, confirmar_id):
 
     ordenes = CartItems.objects.get(pk=confirmar_id)
-    ordenes.Envio = "True"
+    ordenes.Envio = True
     ordenes.save()
     return redirect('Admin')
 
+@login_required(login_url="/login")
 def borrar_pedido(request, confirmar_id):
     ordenes = CartItems.objects.get(pk=confirmar_id)
     ordenes.delete()
@@ -164,17 +176,19 @@ def Administracion(request):
     return render(request, "Administracion.html", {"menu":menu, "topping":topping, "extra":extra})
 
 # Borrar
-
+@login_required(login_url="/login")
 def borrar_menu(request, confirmar_id):
     producto = Product.objects.get(pk=confirmar_id)
     producto.delete()
     return redirect('Administracion')
 
+@login_required(login_url="/login")
 def borrar_Topping(request, confirmar_id):
     Toppings = Topping.objects.get(pk=confirmar_id)
     Toppings.delete()
     return redirect('Administracion')
 
+@login_required(login_url="/login")
 def borrar_extra(request, confirmar_id):
     extra = Extra.objects.get(pk=confirmar_id)
     extra.delete()
