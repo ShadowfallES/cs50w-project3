@@ -241,8 +241,8 @@
                                                         <h4>Selecciona Extra</h4>
                                                         {% for Extras in Extra %}
                                                             <div class="form-check">
-                                                                <input type="hidden" name="n_extra" value="{{Extras.Extra}}">
-                                                                <input class="form-check-input sub_extra" type="checkbox" name="extras" id="flexRadioDefault{{Extra.id}}" value="{{Extras.Precio}}">
+                                                                <input type="hidden" name="extras" value="{{Extras.Precio}}">
+                                                                <input class="form-check-input sub_extra" type="checkbox" name="n_extra" id="flexRadioDefault{{Extra.id}}" value="{{Extras.Extra}}">
                                                                 <label class="form-check-label" for="flexcheckboxDefault{{Extras.id}}">
                                                                     {{Extras.Extra}} - {{Extras.Precio}}
                                                                 </label>

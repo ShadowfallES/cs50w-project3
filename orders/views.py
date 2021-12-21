@@ -103,9 +103,12 @@ def cart_add_pizza(request):
         nombre = request.POST.get("name")
         remplazo = request.POST.get("precio")
         lista = request.POST.getlist("toppings")
-        
         p_extra = request.POST.get("extras")
+        if remplazo is None:
+            messages.success(request, ("Por favor escoger el precio del plato!"))
+            return redirect('index')
         if p_extra is None:
+            
             p_extra = 0
             #FiltroTopping = Topping.objects.filter(id__in=lista)
             precio = remplazo.replace(",",".")
