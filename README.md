@@ -6,7 +6,7 @@
 - Project 3 esta basado en una tienda de pizza donde tendremos que crear una cuenta de usuario para poder pedir
 - Podremos ver el menu completo de la tienda
 - tenemos la opcion de confirmar la compras en el carrito y ver el historial de compras
-- El administrador podra confirmar el pedido solicitado, tambien podra entrar al CRUD-Django donde podra ver el menu ya sea para:
+- El administrador podra confirmar el pedido solicitado, tambien podran entrar al CRUD-Django donde podra ver el menu ya sea para:
     1. Agregar
     2. Eliminar 
     3. Actualizar
@@ -15,7 +15,7 @@
 - Como toque personal agregue al menu la fritanga nicaraguenses, Tambien quise hacer un CRUD pero esta incompleto solo puede borrar XD
 
 # Herramienta
-- En la mayorias de la pagina se trabajo con Boostrap, HTML, CSS, Python-Django
+- En la mayorias de la pagina se trabajo con Bootstrap, HTML, CSS, Python-Django
 
 # Detalle de cada archivo
 - En la pagina de carrito podremos ademas de confirmar compras, tambien podemos borrar del carrito un producto especifico
